@@ -1,4 +1,4 @@
-package Product;
+package ProductBuilder;
 
 import java.util.Date;
 
@@ -21,6 +21,23 @@ public class Product {
         this.supplierId = supplierId;
         this.deliveryId = deliveryId;
         this.bestBefore = bestBefore;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return barcode.equals(product.barcode) && name.equals(product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = barcode.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
     }
 
     public void showInfo() {

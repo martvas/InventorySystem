@@ -1,6 +1,6 @@
 package ProductListFactoryMethod;
 
-import Product.Product;
+import ProductBuilder.Product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +11,7 @@ public class ListOfConcreteProducts implements ListOfProducts {
 
     ListOfConcreteProducts(Date date) {
         this.date = date;
-        productList = new ArrayList<Product>();
+        productList = new ArrayList<>();
     }
 
     @Override

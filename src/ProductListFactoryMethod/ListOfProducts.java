@@ -1,6 +1,6 @@
 package ProductListFactoryMethod;
 
-import Product.Product;
+import ProductBuilder.Product;
 
 import java.util.ArrayList;
 

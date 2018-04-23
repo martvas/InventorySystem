@@ -1,4 +1,4 @@
-package Product;
+package ProductBuilder;
 
 import java.util.Date;
 
