@@ -1,4 +1,4 @@
-package Architecture_System_Patterns.DataMapper;
+package Architecture_System_Patterns.DataMapperAndIdentityMap;
 
 import Creational_Patterns.ProductBuilder.Product;
 import Creational_Patterns.ProductBuilder.ProductBuilder;

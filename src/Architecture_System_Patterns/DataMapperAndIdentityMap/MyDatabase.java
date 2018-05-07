@@ -1,4 +1,4 @@
-package Architecture_System_Patterns.DataMapper;
+package Architecture_System_Patterns.DataMapperAndIdentityMap;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
