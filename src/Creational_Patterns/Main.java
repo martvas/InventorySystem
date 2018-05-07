@@ -14,8 +14,8 @@ public class Main {
         InventoryUser inventoryUser = new InventoryUser();
         ProductBuilder productBuilder = new ProductBuilder();
         inventoryUser.setProductBuilder(productBuilder);
-        Product ogurec = inventoryUser.getProductBuilder().setBarcode(123456L).setName("Ogurec").setBestBefore(new Date()).createProduct();
-        Product pomidor = inventoryUser.getProductBuilder().setBarcode(78456L).setName("Pomidor").setPriceInCents(399).createProduct();
+        Product ogurec = inventoryUser.getProductBuilder().setBarcode(123456).setName("Ogurec").setBestBefore(new Date().toString()).buildProduct();
+        Product pomidor = inventoryUser.getProductBuilder().setBarcode(78456).setName("Pomidor").setPriceInCents(399).buildProduct();
         ArrayOfProducts arrayOfProducts = new ArrayOfProducts();
         arrayOfProducts.addProductToArr(ogurec);
         arrayOfProducts.addProductToArr(pomidor);
@@ -30,8 +30,8 @@ public class Main {
         ListOfProducts soldProductList = inventoryUser.createProductList(EnumProductList.SOLD, new Date());
         ProductBuilder productBuilder = new ProductBuilder();
         inventoryUser.setProductBuilder(productBuilder);
-        Product ogurec = inventoryUser.getProductBuilder().setBarcode(123456L).setName("Ogurec").setBestBefore(new Date()).createProduct();
-        Product pomidor = inventoryUser.getProductBuilder().setBarcode(78456L).setName("Pomidor").setPriceInCents(399).createProduct();
+        Product ogurec = inventoryUser.getProductBuilder().setBarcode(123456).setName("Ogurec").setBestBefore(new Date().toString()).buildProduct();
+        Product pomidor = inventoryUser.getProductBuilder().setBarcode(78456).setName("Pomidor").setPriceInCents(399).buildProduct();
         soldProductList.addProductToList(ogurec);
         soldProductList.addProductToList(pomidor);
 

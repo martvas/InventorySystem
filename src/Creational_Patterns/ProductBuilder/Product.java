@@ -1,18 +1,16 @@
 package Creational_Patterns.ProductBuilder;
 
-import java.util.Date;
-
 public class Product {
-    private Long barcode;
+    private Integer barcode;
     private String name;
     private String type;
     private Integer priceInCents;
     private Integer quantity;
     private Integer supplierId;
     private Integer deliveryId;
-    private Date bestBefore;
+    private String bestBefore;
 
-    Product(Long barcode, String name, String type, Integer priceInCents, Integer quantity, Integer supplierId, Integer deliveryId, Date bestBefore) {
+    Product(Integer barcode, String name, String type, Integer priceInCents, Integer quantity, Integer supplierId, Integer deliveryId, String bestBefore) {
         this.barcode = barcode;
         this.name = name;
         this.type = type;
@@ -21,6 +19,42 @@ public class Product {
         this.supplierId = supplierId;
         this.deliveryId = deliveryId;
         this.bestBefore = bestBefore;
+    }
+
+    public void showInfo() {
+        System.out.println(name + " " + barcode + " " + priceInCents);
+    }
+
+    public Integer getBarcode() {
+        return barcode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Integer getPriceInCents() {
+        return priceInCents;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Integer getSupplierId() {
+        return supplierId;
+    }
+
+    public Integer getDeliveryId() {
+        return deliveryId;
+    }
+
+    public String getBestBefore() {
+        return bestBefore;
     }
 
     @Override
@@ -38,9 +72,5 @@ public class Product {
         int result = barcode.hashCode();
         result = 31 * result + name.hashCode();
         return result;
-    }
-
-    public void showInfo() {
-        System.out.println(name + " " + barcode + " " + priceInCents);
     }
 }

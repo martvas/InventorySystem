@@ -1,18 +1,16 @@
 package Creational_Patterns.ProductBuilder;
 
-import java.util.Date;
-
 public class ProductBuilder {
-    private Long barcode;
+    private Integer barcode;
     private String name;
     private String type;
     private Integer priceInCents;
     private Integer quantity;
     private Integer supplierId;
     private Integer deliveryId;
-    private Date bestBefore;
+    private String bestBefore;
 
-    public ProductBuilder setBarcode(Long barcode) {
+    public ProductBuilder setBarcode(Integer barcode) {
         this.barcode = barcode;
         return this;
     }
@@ -47,12 +45,12 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder setBestBefore(Date bestBefore) {
+    public ProductBuilder setBestBefore(String bestBefore) {
         this.bestBefore = bestBefore;
         return this;
     }
 
-    public Product createProduct() {
+    public Product buildProduct() {
         return new Product(barcode, name, type, priceInCents, quantity, supplierId, deliveryId, bestBefore);
     }
 }
