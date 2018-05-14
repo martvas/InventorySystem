@@ -73,4 +73,17 @@ public class Product {
         result = 31 * result + name.hashCode();
         return result;
     }
+
+    public String[] toStringArr() {
+        String[] productString = new String[8];
+        productString[0] = (getBarcode() == null) ? "" : getBarcode().toString();
+        productString[1] = (getName() == null) ? "" : getName();
+        productString[2] = (getType() == null) ? "" : getType();
+        productString[3] = (getPriceInCents() == null) ? "" : getPriceInCents().toString();
+        productString[4] = (getQuantity() == null) ? "" : getQuantity().toString();
+        productString[5] = (getSupplierId() == null) ? "" : getSupplierId().toString();
+        productString[6] = (getDeliveryId() == null) ? "" : getDeliveryId().toString();
+        productString[7] = (getBestBefore() == null) ? "" : getBestBefore();
+        return productString;
+    }
 }

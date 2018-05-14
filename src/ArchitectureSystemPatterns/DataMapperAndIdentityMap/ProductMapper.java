@@ -3,18 +3,24 @@ package ArchitectureSystemPatterns.DataMapperAndIdentityMap;
 import CreationalPatterns.ProductBuilder.Product;
 import CreationalPatterns.ProductBuilder.ProductBuilder;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductMapper {
-    private Connection connection;
+    private MyDatabase myDatabase;
 
-    ProductMapper(Connection connection) {
-        this.connection = connection;
+    public ProductMapper(MyDatabase myDatabase) {
+        this.myDatabase = myDatabase;
     }
 
     Product findByBarcode(Integer barcode) throws SQLException {
+        myDatabase.connect();
         Product product = null;
-        PreparedStatement statement = connection.prepareStatement
+        PreparedStatement statement = myDatabase.getConnection().prepareStatement
                 ("SELECT * FROM " + MyDatabase.TABLE_NAME + " WHERE barcode = " + barcode);
 
         ResultSet resultSet = statement.executeQuery();
@@ -30,12 +36,14 @@ public class ProductMapper {
                     .setBestBefore(resultSet.getString(9))
                     .buildProduct();
         }
+        myDatabase.disconnect();
         return product;
     }
 
 
-    void insert(Product product) throws SQLException {
-        PreparedStatement pst = connection.prepareStatement
+    public void insert(Product product) throws SQLException {
+        myDatabase.connect();
+        PreparedStatement pst = myDatabase.getConnection().prepareStatement
                 ("INSERT INTO " + MyDatabase.TABLE_NAME + " " + MyDatabase.ALL_COLUMNS + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         pst.setObject(1, product.getBarcode());
         pst.setObject(2, product.getName());
@@ -46,9 +54,11 @@ public class ProductMapper {
         pst.setObject(7, product.getDeliveryId());
         pst.setObject(8, product.getBestBefore());
         pst.execute();
+        myDatabase.disconnect();
     }
 
     public void update(Product product) throws SQLException {
+        myDatabase.connect();
         String sqlQuery = new StringBuilder()
                 .append("UPDATE " + MyDatabase.TABLE_NAME + " SET ")
                 .append(MyDatabase.NAME + " = ? ")
@@ -61,7 +71,7 @@ public class ProductMapper {
                 .append("WHERE " + MyDatabase.BARCODE + " = ?;")
                 .toString();
 
-        PreparedStatement pst = connection.prepareStatement
+        PreparedStatement pst = myDatabase.getConnection().prepareStatement
                 (sqlQuery);
         pst.setString(1, product.getName());
         pst.setString(2, product.getType());
@@ -74,18 +84,22 @@ public class ProductMapper {
         pst.setInt(8, product.getBarcode());
 
         pst.execute();
+        myDatabase.disconnect();
     }
 
     public void deleteByBarcode(Integer barcode) throws SQLException {
+        myDatabase.connect();
         String sqlQuery = "DELETE FROM " + MyDatabase.TABLE_NAME + " WHERE " + MyDatabase.BARCODE + " = " + barcode;
-        Statement st = connection.createStatement();
+        Statement st = myDatabase.getConnection().createStatement();
         st.execute(sqlQuery);
+        myDatabase.disconnect();
     }
 
 
-    void getAllProducts() throws SQLException {
+    void getAllProductsToIdentityMap() throws SQLException {
+        myDatabase.connect();
         String sqlQuery = "SELECT * FROM " + MyDatabase.TABLE_NAME;
-        Statement statement = connection.createStatement();
+        Statement statement = myDatabase.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
             Product product = new ProductBuilder()
@@ -100,5 +114,29 @@ public class ProductMapper {
                     .buildProduct();
             ProductIdentityMap.addProduct(product);
         }
+        myDatabase.disconnect();
+    }
+
+    public List<Product> getAllProductsList() throws SQLException {
+        myDatabase.connect();
+        List<Product> productsList = new ArrayList<>();
+        String sqlQuery = "SELECT * FROM " + MyDatabase.TABLE_NAME;
+        Statement statement = myDatabase.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            Product product = new ProductBuilder()
+                    .setBarcode(resultSet.getInt(2))
+                    .setName(resultSet.getString(3))
+                    .setType(resultSet.getString(4))
+                    .setPriceInCents(resultSet.getInt(5))
+                    .setQuantity(resultSet.getInt(6))
+                    .setSupplierId(resultSet.getInt(7))
+                    .setDeliveryId(resultSet.getInt(8))
+                    .setBestBefore(resultSet.getString(9))
+                    .buildProduct();
+            productsList.add(product);
+        }
+        myDatabase.disconnect();
+        return productsList;
     }
 }

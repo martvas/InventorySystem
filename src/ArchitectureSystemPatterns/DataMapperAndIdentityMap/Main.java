@@ -11,7 +11,7 @@ public class Main {
         MyDatabase myDatabase = new MyDatabase();
         myDatabase.connect();
         myDatabase.createNewTableForProducts();
-        ProductMapper productMapper = new ProductMapper(myDatabase.getConnection());
+        ProductMapper productMapper = new ProductMapper(myDatabase);
 
         Product ogurec = new ProductBuilder().setBarcode(123456).setName("Ogurec").setPriceInCents(567).setBestBefore(new Date().toString()).buildProduct();
         Product pomidor = new ProductBuilder().setBarcode(78456).setName("Pomidor").setPriceInCents(399).buildProduct();
@@ -27,7 +27,7 @@ public class Main {
         System.out.println("_______________________________");
         System.out.println("Продукты в IdentityMap");
 
-        productMapper.getAllProducts();
+        productMapper.getAllProductsToIdentityMap();
         ProductIdentityMap.printAll();
 
         myDatabase.disconnect();

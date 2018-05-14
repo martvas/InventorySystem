@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-class MyDatabase {
+public class MyDatabase {
     static final String TABLE_NAME = "products";
     static final String BARCODE = "barcode";
     static final String NAME = "name";
@@ -21,9 +21,9 @@ class MyDatabase {
     private Connection connection;
 
 
-    void createNewTableForProducts() throws SQLException {
-        Statement stToDrop = connection.createStatement();
-        stToDrop.execute("DROP TABLE " + TABLE_NAME);
+    public void createNewTableForProducts() throws SQLException {
+//        Statement stToDrop = connection.createStatement();
+//        stToDrop.execute("DROP TABLE " + TABLE_NAME);
 
         Statement st = connection.createStatement();
         String createTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n" +
@@ -43,7 +43,7 @@ class MyDatabase {
         st.execute(createTableQuery);
     }
 
-    void connect() {
+    public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + TABLE_NAME + ".db");
@@ -52,7 +52,7 @@ class MyDatabase {
         }
     }
 
-    void disconnect() {
+    public void disconnect() {
         try {
             connection.close();
         } catch (SQLException e) {
